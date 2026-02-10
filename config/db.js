@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const connectDB = async () => {
   try {
     const conn = await mongoose.connect(
-      process.env.MONGO_URI || "mongodb://localhost:27017/hecoldcrm",
+      process.env.MONGO_URI || "mongodb+srv://prakharentp2002_db_user:jinXvfyeH7WrGk7r@hecoltcrm.fbfkuhy.mongodb.net/?appName=hecoltCrm",
       {},
     );
 
