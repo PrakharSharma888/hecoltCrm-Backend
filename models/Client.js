@@ -8,8 +8,27 @@ const clientSchema = mongoose.Schema(
     },
     email: {
       type: String,
-      required: true,
-      unique: true,
+    },
+    companyName: {
+      type: String,
+    },
+    businessDescription: {
+      type: String,
+    },
+    usp: {
+      type: String,
+    },
+    targetLocations: {
+      type: String,
+    },
+    targetAudience: {
+      type: String,
+    },
+    servicesProviding: {
+      type: [String],
+    },
+    typeOfContent: {
+      type: String,
     },
     status: {
       type: String,

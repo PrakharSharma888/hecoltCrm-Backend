@@ -15,10 +15,21 @@ router.get("/", async (req, res) => {
 
 // POST /clients
 router.post("/", async (req, res) => {
-  const { name, email, status } = req.body;
+  const {
+    name,
+    email,
+    status,
+    companyName,
+    businessDescription,
+    usp,
+    targetLocations,
+    targetAudience,
+    servicesProviding,
+    typeOfContent,
+  } = req.body;
 
-  if (!name || !email) {
-    return res.status(400).json({ message: "Name and email are required" });
+  if (!name) {
+    return res.status(400).json({ message: "Name is required" });
   }
 
   try {
@@ -26,6 +37,13 @@ router.post("/", async (req, res) => {
       name,
       email,
       status: status || "Active",
+      companyName,
+      businessDescription,
+      usp,
+      targetLocations,
+      targetAudience,
+      servicesProviding,
+      typeOfContent,
     });
 
     // Add system activity
