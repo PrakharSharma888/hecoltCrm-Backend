@@ -59,7 +59,8 @@ router.post("/", async (req, res) => {
       client: newClient,
     });
   } catch (error) {
-    res.status(500).json({ message: "Server error" });
+    console.error("Error in POST /clients:", error);
+    res.status(500).json({ message: error.message || "Server error", error });
   }
 });
 
