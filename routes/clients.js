@@ -64,4 +64,67 @@ router.post("/", async (req, res) => {
   }
 });
 
+// DELETE /clients/:id
+router.delete("/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const client = await Client.findByIdAndDelete(id);
+
+    if (!client) {
+      return res.status(404).json({ message: "Client not found" });
+    }
+
+    // Add system activity
+    await Activity.create({
+      user: "System",
+      content: `Client Deleted: ${client.name}`,
+      time: "Just now",
+      isSystem: true,
+    });
+
+    res.status(200).json({ message: "Client deleted successfully" });
+  } catch (error) {
+    console.error("Error in DELETE /clients/:id:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+// PATCH /clients/:id
+router.patch("/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const updates = req.body;
+
+    const updatedClient = await Client.findByIdAndUpdate(id, updates, {
+      new: true,
+    });
+
+    if (!updatedClient) {
+      return res.status(404).json({ message: "Client not found" });
+    }
+
+    // Add system activity if status changed
+    if (updates.status) {
+      await Activity.create({
+        user: "System",
+        content: `Client ${updatedClient.name} status updated to ${updates.status}`,
+        time: "Just now",
+        isSystem: true,
+      });
+    } else {
+      await Activity.create({
+        user: "System",
+        content: `Client Details Updated: ${updatedClient.name}`,
+        time: "Just now",
+        isSystem: true,
+      });
+    }
+
+    res.json(updatedClient);
+  } catch (error) {
+    console.error("Error in PATCH /clients/:id:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
 module.exports = router;
