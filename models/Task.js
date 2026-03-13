@@ -75,6 +75,10 @@ const taskSchema = mongoose.Schema(
       type: Number, // Duration in milliseconds
       default: null,
     },
+    dueDate: {
+      type: Date,
+      default: null,
+    },
   },
   {
     timestamps: true,

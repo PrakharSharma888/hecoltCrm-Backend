@@ -54,7 +54,7 @@ router.get("/:id", async (req, res) => {
 
 // POST /tasks
 router.post("/", async (req, res) => {
-  const { title, client, date, assigneeImg, status, assignees } = req.body;
+  const { title, client, date, assigneeImg, status, assignees, dueDate } = req.body;
 
   if (!title || !client) {
     return res.status(400).json({ message: "Title and Client are required" });
@@ -69,6 +69,7 @@ router.post("/", async (req, res) => {
       status: status || "todo",
       assignees: assignees || [],
       progress: 0,
+      dueDate: dueDate || null,
     });
 
     // Also add an activity log
